@@ -15,7 +15,7 @@ export const useMovment = ({
 }) => {
   const smoothness = 1;
   const speed = 2;
-  const { right, up, left, down } = useArrows();
+  const { right, backward, left, forward } = useArrows();
 
   const { actions } = useAnimations(model.animations, model.scene);
 
