@@ -2,17 +2,18 @@
 import Ground from "@/components/Ground";
 import Lights from "@/components/Lights";
 import Player from "@/components/Player";
-import { OrbitControls, Stats } from "@react-three/drei";
+import Rock from "@/components/Rock";
+import { Stats } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 
 export default function Home() {
-  const debugging = true;
+  const debugging = false;
   return (
     <div id="canvas-container" className="h-screen bg-black">
       <Canvas
         shadows
         camera={{
-          position: [0, 10, 10],
+          position: [0, 2, 4],
         }}
       >
         {debugging ? <Stats /> : null}
@@ -20,9 +21,9 @@ export default function Home() {
         {debugging ? <gridHelper args={[20, 20]} /> : null}
 
         <Lights />
-        {/* <OrbitControls /> */}
         <Ground />
         <Player />
+        <Rock />
       </Canvas>
     </div>
   );
