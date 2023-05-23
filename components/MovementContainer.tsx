@@ -1,11 +1,6 @@
 import { directionOffset } from "@/functions/offset-direction";
 import { useArrows } from "@/hooks/use-arrows";
-import {
-  OrbitControls,
-  useAnimations,
-  useFBX,
-  useGLTF,
-} from "@react-three/drei";
+import { OrbitControls, useAnimations } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
 import React, { useEffect, useRef } from "react";
 import * as THREE from "three";
@@ -54,6 +49,7 @@ const MovementContainer = (props: Props) => {
       nextActionToPlay?.reset().fadeIn(0.2).play();
       currentAction.current = action;
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [right, left, forward, backward]);
 
   useEffect(() => {
@@ -63,6 +59,7 @@ const MovementContainer = (props: Props) => {
     if (controlRef.current) {
       controlRef.current.target = cameraTarget;
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useFrame((state, delta) => {
