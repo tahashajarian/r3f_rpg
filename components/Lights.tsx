@@ -7,7 +7,8 @@ const Lights = (props: Props) => {
     <>
       <ambientLight intensity={0.9} />
       {/* <directionalLight position={[-5, 5, -5]} intensity={0.5} castShadow wd/> */}
-      <pointLight position={[5, 5, 5]} castShadow />
+      <pointLight position={[0, 15, 0]} castShadow />
+      <directionalLight position={[0, 5, 0]} />
     </>
   );
 };

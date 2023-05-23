@@ -13,6 +13,7 @@ import { GLTF } from "three/examples/jsm/loaders/GLTFLoader";
 
 type Props = {
   model: GLTF;
+  withCamera: boolean;
 };
 
 let walkDirection = new THREE.Vector3();
@@ -92,7 +93,9 @@ const MovementContainer = (props: Props) => {
       const moveZ = walkDirection.z * velocity * delta;
       props.model.scene.position.x += moveX;
       props.model.scene.position.z += moveZ;
-      updateCamera(moveX, moveZ);
+      if (props.withCamera) {
+        updateCamera(moveX, moveZ);
+      }
     }
   });
 

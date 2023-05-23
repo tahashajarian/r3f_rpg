@@ -7,7 +7,7 @@ type Props = {};
 const Player = (props: Props) => {
   const playerModel: GLTF = useLoader(GLTFLoader, "/models/characters/Ty.glb");
 
-  return <MovementContainer model={playerModel} />;
+  return <MovementContainer model={playerModel} withCamera />;
 };
 
 export default Player;
