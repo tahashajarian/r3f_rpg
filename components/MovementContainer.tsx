@@ -98,7 +98,7 @@ const MovementContainer = (props: Props) => {
 
   return (
     <>
-      <OrbitControls ref={controlRef} />
+      {/* <OrbitControls ref={controlRef} /> */}
       <primitive object={props.model.scene} />
     </>
   );

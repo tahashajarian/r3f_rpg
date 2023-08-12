@@ -7,13 +7,13 @@ import { Stats } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 
 export default function Home() {
-  const debugging = false;
+  const debugging = true;
   return (
     <div id="canvas-container" className="h-screen bg-black">
       <Canvas
         shadows
         camera={{
-          position: [0, 2, 4],
+          position: [0, 3, 5],
         }}
       >
         {debugging ? <Stats /> : null}
