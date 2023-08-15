@@ -1,6 +1,6 @@
 import { directionOffset } from "@/functions/offset-direction";
 import { useArrows } from "@/hooks/use-arrows";
-import { OrbitControls, useAnimations } from "@react-three/drei";
+import { OrbitControls, useAnimations, Text } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
 import React, { useEffect, useRef } from "react";
 import * as THREE from "three";
@@ -9,6 +9,7 @@ import { GLTF } from "three/examples/jsm/loaders/GLTFLoader";
 type Props = {
   model: GLTF;
   withCamera: boolean;
+  name: string;
 };
 
 let walkDirection = new THREE.Vector3();
@@ -20,6 +21,8 @@ const MovementContainer = (props: Props) => {
   const { actions } = useAnimations(props.model.animations, props.model.scene);
 
   const controlRef: any = useRef(null);
+  const modelRef: any = useRef(null);
+  const usernameRef: any = useRef(null);
   const camera = useThree((state) => state.camera);
   const { right, forward, left, backward } = useArrows();
   const currentAction = useRef("");
@@ -27,9 +30,9 @@ const MovementContainer = (props: Props) => {
   const updateCamera = (moveX: number, moveZ: number) => {
     camera.position.x += moveX;
     camera.position.z += moveZ;
-    cameraTarget.x = props.model.scene.position.x;
-    cameraTarget.y = props.model.scene.position.y + 2;
-    cameraTarget.z = props.model.scene.position.z;
+    cameraTarget.x = modelRef.current.position.x;
+    cameraTarget.y = modelRef.current.position.y + 4;
+    cameraTarget.z = modelRef.current.position.z;
     if (controlRef.current) {
       controlRef.current.target = cameraTarget;
     }
@@ -53,9 +56,9 @@ const MovementContainer = (props: Props) => {
   }, [right, left, forward, backward]);
 
   useEffect(() => {
-    cameraTarget.x = props.model.scene.position.x;
-    cameraTarget.y = props.model.scene.position.y + 2;
-    cameraTarget.z = props.model.scene.position.z;
+    cameraTarget.x = modelRef.current.position.x;
+    cameraTarget.y = modelRef.current.position.y + 4;
+    cameraTarget.z = modelRef.current.position.z;
     if (controlRef.current) {
       controlRef.current.target = cameraTarget;
     }
@@ -65,8 +68,8 @@ const MovementContainer = (props: Props) => {
   useFrame((state, delta) => {
     if (currentAction.current === "walking") {
       let angleYCameraDirection = Math.atan2(
-        camera.position.x - props.model.scene.position.x,
-        camera.position.z - props.model.scene.position.z
+        camera.position.x - modelRef.current.position.x,
+        camera.position.z - modelRef.current.position.z
       );
       let newDirectionOffset = directionOffset({
         forward,
@@ -88,19 +91,23 @@ const MovementContainer = (props: Props) => {
       const velocity = 1;
       const moveX = walkDirection.x * velocity * delta;
       const moveZ = walkDirection.z * velocity * delta;
-      props.model.scene.position.x += moveX;
-      props.model.scene.position.z += moveZ;
+      modelRef.current.position.x += moveX;
+      modelRef.current.position.z += moveZ;
       if (props.withCamera) {
         updateCamera(moveX, moveZ);
       }
+      // usernameRef.current.lookAt(camera.position);
     }
   });
 
   return (
-    <>
+    <group ref={modelRef}>
+      <Text ref={usernameRef} position={[0, 2.2, 0]} scale={0.2}>
+        {props.name}
+      </Text>
       {/* <OrbitControls ref={controlRef} /> */}
       <primitive object={props.model.scene} />
-    </>
+    </group>
   );
 };
 

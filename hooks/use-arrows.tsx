@@ -12,19 +12,19 @@ export const useArrows = () => {
     const handleKey = ({ code, state }: { code: string; state: boolean }) => {
       switch (code) {
         case "ArrowLeft":
-        case "KeyA":
+        // case "KeyA":
           arrows.left = state;
           break;
         case "ArrowRight":
-        case "KeyD":
+        // case "KeyD":
           arrows.right = state;
           break;
         case "ArrowDown":
-        case "KeyS":
+        // case "KeyS":
           arrows.backward = state;
           break;
         case "ArrowUp":
-        case "KeyW":
+        // case "KeyW":
           arrows.forward = state;
           break;
         default:

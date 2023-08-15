@@ -1,30 +1,29 @@
 "use client";
-import Ground from "@/components/Ground";
-import Lights from "@/components/Lights";
-import Player from "@/components/Player";
-import Rock from "@/components/Rock";
-import { Stats } from "@react-three/drei";
-import { Canvas } from "@react-three/fiber";
+
+import MyScene from "@/components/Scene";
+import ChatManagement from "@/components/chat/chat-managment";
+import { useEffect, useState } from "react";
 
 export default function Home() {
   const debugging = true;
+  const [playerName, setPlayerName] = useState<string>("");
+  useEffect(() => {
+    fetch("http://localhost:8000/userinfo")
+      .then((response) => response.text())
+      .then((response) => {
+        setPlayerName(response);
+      });
+  }, []);
+
   return (
     <div id="canvas-container" className="h-screen bg-black">
-      <Canvas
-        shadows
-        camera={{
-          position: [0, 3, 5],
+      <ChatManagement />
+      <MyScene
+        playerInfo={{
+          playerName,
         }}
-      >
-        {debugging ? <Stats /> : null}
-        {debugging ? <axesHelper args={[20]} /> : null}
-        {debugging ? <gridHelper args={[20, 20]} /> : null}
-
-        <Lights />
-        <Ground />
-        <Player />
-        <Rock />
-      </Canvas>
+        debugging={debugging}
+      />
     </div>
   );
 }
