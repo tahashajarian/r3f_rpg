@@ -14,21 +14,35 @@ const io = new Server(server, {
   },
 });
 
-const users = []
+const players = {};
 
-app.get("/userinfo", (req, res) => {
-  res.send("taha");
+app.get("/login", (req, res) => {
+  const name = req.query.username;
+  const id = req.query.id;
+  let validName = true;
+  for (const id in players) {
+    if (name === players[id].username) {
+      validName = false;
+    }
+  }
+  if (validName) {
+    res.json({
+      login: true,
+    });
+  } else {
+    res.json({
+      login: false,
+    });
+  }
 });
 
 io.on("connection", (socket) => {
   console.log("a user connected => ", socket.id);
-  socket.on("login", (data) => {
-    // socket.broadcast.emit("login", data);
-    users.push({
-      username: data,
-      userid: socket.id
-    })
-  });
+  players[socket.id] = {
+    id: socket.id,
+    position: [10, 0, 20],
+  };
+
   socket.on("send_message", (data) => {
     socket.broadcast.emit("recive_message", data);
   });

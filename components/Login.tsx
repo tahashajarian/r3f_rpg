@@ -10,7 +10,20 @@ const Login = (props: Props) => {
   const dispatch = useDispatch();
   const signup = (e: any) => {
     e.preventDefault();
-    dispatch(setName(username));
+    fetch(
+      "http://localhost:8000/login?" +
+        new URLSearchParams({
+          username: username,
+        })
+    )
+      .then((response) => response.json())
+      .then((response) => {
+        if (response.login) {  
+          dispatch(setName(username));
+        } else {
+          alert("try another name");
+        }
+      });
   };
   return (
     <div className="fixed inset-0 bg-black z-50 h-screen w-screen flex justify-center items-center">

@@ -14,7 +14,7 @@ export default function Home() {
       {user.isLogin ? (
         <div id="canvas-container" className="h-screen bg-black">
           <ChatManagement />
-          <MyScene debugging={debugging} />
+          {/* <MyScene debugging={debugging} /> */}
         </div>
       ) : (
         <Login />
