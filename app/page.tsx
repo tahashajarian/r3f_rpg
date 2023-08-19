@@ -1,29 +1,24 @@
 "use client";
 
+import Login from "@/components/Login";
 import MyScene from "@/components/Scene";
 import ChatManagement from "@/components/chat/chat-managment";
-import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 export default function Home() {
   const debugging = true;
-  const [playerName, setPlayerName] = useState<string>("");
-  useEffect(() => {
-    fetch("http://localhost:8000/userinfo")
-      .then((response) => response.text())
-      .then((response) => {
-        setPlayerName(response);
-      });
-  }, []);
+  const user = useSelector((state: any) => state.user);
 
   return (
-    <div id="canvas-container" className="h-screen bg-black">
-      <ChatManagement />
-      <MyScene
-        playerInfo={{
-          playerName,
-        }}
-        debugging={debugging}
-      />
+    <div>
+      {user.isLogin ? (
+        <div id="canvas-container" className="h-screen bg-black">
+          <ChatManagement />
+          <MyScene debugging={debugging} />
+        </div>
+      ) : (
+        <Login />
+      )}
     </div>
   );
 }

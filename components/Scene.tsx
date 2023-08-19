@@ -5,7 +5,6 @@ import Rock from "@/components/Rock";
 import { Stats } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 type Props = {
-  playerInfo: any;
   debugging: boolean;
 };
 
@@ -23,7 +22,7 @@ const MyScene = (props: Props) => {
 
       <Lights />
       <Ground />
-      <Player name={props.playerInfo.playerName} />
+      <Player />
       <Rock />
     </Canvas>
   );
